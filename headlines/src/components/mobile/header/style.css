@@ -1,0 +1,13 @@
+.mobileheader{
+    padding: 0.4rem;
+    border-bottom: 1px solid #108ee9;
+}
+.mobileheader .logo span{
+    font-size: 1.4rem;
+    padding-left: 0.4rem;
+    vertical-align: top;
+}
+.mobileheader .logo img{
+    width: 38px;
+    height: 38px;
+}

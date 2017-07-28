@@ -1,0 +1,8 @@
+.pcheader {
+    padding: 0.8rem 0px;
+}
+.pcheader .logo span{
+    padding-left: 0.6rem;
+    font-size: 1.6rem;
+    vertical-align: top;
+}
