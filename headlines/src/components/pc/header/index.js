@@ -1,10 +1,9 @@
 import React , { Component } from 'react';
-import { Row, Col, Menu, Icon, Tabs, Form, message, Button, Input, Checkbox, Modal, Tooltip} from 'antd';
+import { Row, Col, Menu, Icon, Tabs, message, Button, Modal} from 'antd';
 import './style.css';
+import RegisterForm from './registerForm';
 import LoginForm from './loginForm';
 const logo = require('../../../img/logo.png');
-
-const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 
 class Header extends Component {
@@ -14,7 +13,7 @@ class Header extends Component {
         /**
          * {String} current 导航选项默认值 默认 top
          * {Boolean} modalVisible 弹窗是否显示 默认 false
-         * {String} action 按钮的默认动作 默认 login
+         * {String} action 表单提交状态 默认 register
          * {Boolean} hasLogined 用户是否登录 默认 false
          * {String} userNickName 用户登录后的昵称 默认 （空）
          * {Number} userId 用户登录后的 id 默认 0
@@ -22,19 +21,18 @@ class Header extends Component {
         this.state = {
             current: 'top',
             modalVisible: false,
-            action: 'login',
+            action: 'register',
             hasLogined: false,
             userNickName: '',
 			userId: 0,
 			confirmDirty: false,
         }
-		 this.handleClick = this.handleClick.bind(this);
-		 this.handleSubmit = this.handleSubmit.bind(this);
-		 this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.login = this.login.bind(this);
 	}
-	// 导航切换点击 当点击注册登录的时候改变modal状态
+	// 导航切换点击 当点击 注册/登录 的时候弹出注册、登陆框
 	handleClick(e) {
-		if (e.key == 'register') {
+		if (e.key === 'register') {
 			this.setState({
 				modalVisible: true
 			})
@@ -49,59 +47,50 @@ class Header extends Component {
             modalVisible: value
         });
 	}
-	// 注册二次密码验证
-	handleConfirmBlur(e) {
-		const value = e.target.value;
-		this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+	// tabs改变请求状态 
+	callback(key) {
+		if(key === '1') {
+			this.setState({
+				action: 'register'
+			});
+		} else {
+			this.setState({
+				action: 'login'
+			});
+		}
 	}
-	// 注册提交
-	handleSubmit(e) {
-		e.preventDefault();
-		this.props.form.validateFieldsAndScroll((err, values) => {
-			if (!err) {
-				console.log('Received values of form: ', values);
-				return false;
-			}
+	/**
+	 * 登录成功后的返回函数
+	 * @param {String} userName 登陆用户名字
+	 * @param {Number} userId 登陆用户ID
+	 * @param {String} mes 登录还是注册
+	 * @memberof Header
+	 */
+	login(userName,userId,mes) {
+		this.setState({
+			hasLogined: true,
+			userNickName: userName,
+			userId: userId
 		});
-		let myFetchOptions = {
-			method: 'GET'
-		};
-		let forData = this.props.form.getFieldsValue();
-		console.log(this.props.form.getFieldsError());
-		//console.log(forData);
+		this.setModalVisible(false);
+		message.success(mes);
+	}
+	layOut() {
+		this.setState({
+			hasLogined: false,
+			userNickName: '',
+			userId: 0
+		})
 	}
     render() {
-		const { getFieldDecorator } = this.props.form;
 		let state = this.state;
-		// const formItemLayout = {
-		// 	labelCol: {
-		// 		xs: { span: 24 },
-		// 		sm: { span: 6 },
-		// 	},
-		// 	wrapperCol: {
-		// 		xs: { span: 24 },
-		// 		sm: { span: 14 },
-		// 	},
-		// };
-		// const tailFormItemLayout = {
-		// 	wrapperCol: {
-		// 		xs: {
-		// 		span: 24,
-		// 		offset: 0,
-		// 		},
-		// 		sm: {
-		// 		span: 14,
-		// 		offset: 6,
-		// 		},
-		// 	},
-		// };
         let userShow = state.hasLogined ?
         <Menu.Item key="logout" className='register'>
             <Button type="primary">{state.userNickName}</Button>&nbsp;&nbsp;
-            <a href='http://www.baidu.com' target='_blank'>
+            <a href='http://www.baidu.com' target='_blank' style={{display:'inline-block'}}>
                 <Button type="primary">个人中心</Button>
             </a>&nbsp;&nbsp;
-            <Button>退出</Button>
+            <Button onClick={this.layOut.bind(this)}>退出</Button>
         </Menu.Item> :
         <Menu.Item key="register" className='register'>
              <Icon type="login" />登录 / 注册
@@ -154,45 +143,12 @@ class Header extends Component {
 					onOk={() => this.setModalVisible(false)}
 					onCancel={() => this.setModalVisible(false)}
 					>
-					<Tabs defaultActiveKey="1">
+					<Tabs defaultActiveKey="1" onChange={this.callback.bind(this)}>
 						<TabPane tab="注册" key="1">
-							<Form onSubmit={this.handleSubmit} className="login-form">
-								<FormItem  label="账户" hasFeedback >
-									{getFieldDecorator('userName', {
-										rules: [{ required: true, message: '请填写你的账户名', whitespace: true }],
-									})(
-										<Input />
-									)}
-								</FormItem>
-								<FormItem label="密码" hasFeedback>
-									{getFieldDecorator('password', {
-										rules: [{
-										required: true, message: '请设置你的密码!',
-										}, {
-										validator: this.checkConfirm,
-										}],
-									})(
-										<Input type="password" />
-									)}
-								</FormItem>
-								<FormItem  label="确认密码" hasFeedback >
-									{getFieldDecorator('confirm', {
-										rules: [{
-										required: true, message: '两次密码不一样!',
-										}, {
-										validator: this.checkPassword,
-										}],
-									})(
-										<Input type="password" onBlur={this.handleConfirmBlur} />
-									)}
-								</FormItem>
-								<FormItem >
-									<Button type="primary" htmlType="submit">注册</Button>
-								</FormItem>
-							</Form>
+							<RegisterForm action={state.action} login={this.login}/>
 						</TabPane>
 						<TabPane tab="登录" key="2">
-							<LoginForm/>
+							<LoginForm action={state.action} login={this.login}/>
 						</TabPane>
 					</Tabs>
 				</Modal>
@@ -202,4 +158,4 @@ class Header extends Component {
 
 }
 
-export default Form.create()(Header);
+export default Header;

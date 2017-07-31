@@ -3,38 +3,37 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+  // 注册 登录 提交
+	handleSubmit(e) {
+    e.preventDefault();
+		this.props.form.validateFieldsAndScroll((err, values) => {
+			if (!err) {
+				console.log('Received values of form: ', values);
+				return false;
+			}
+		});
+		let myFetchOptions = {
+			method: 'GET'
+    };
+		let formData = this.props.form.getFieldsValue();
+		let error = this.props.form.getFieldsError();
+		for (var key in error) {
+			if(error[key] !== undefined){
+				return false;
+			}
+		}
+		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.props.action
+		+ "&username="+formData.userName+"&password="+formData.password, myFetchOptions)
+		.then((data) => {
+			this.props.login(formData.userName,Math.round(Math.random() * 100000),'登陆成功!');
+		})
+	}
   render() {
     const { getFieldDecorator } = this.props.form;
-    // const formItemLayout = {
-		// 	labelCol: {
-		// 		xs: { span: 24 },
-		// 		sm: { span: 6 },
-		// 	},
-		// 	wrapperCol: {
-		// 		xs: { span: 24 },
-		// 		sm: { span: 14 },
-		// 	},
-    // };
-    // const tailFormItemLayout = {
-		// 	wrapperCol: {
-		// 		xs: {
-		// 		span: 24,
-		// 		offset: 0,
-		// 		},
-		// 		sm: {
-		// 		span: 14,
-		// 		offset: 6,
-		// 		},
-		// 	},
-		// };
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem label='用户名'  hasFeedback >
