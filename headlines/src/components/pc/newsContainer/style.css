@@ -1,0 +1,37 @@
+.ant-carousel .slick-slide {
+  text-align: center;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+.newsContainer .left{
+    width: 480px;
+}
+.newsContainer .left {
+  margin-right: 0.5rem;
+}
+.newsContainer .right .ant-card-body{
+  font-size: 1rem;
+  padding: 0px 0.5rem;
+}
+.newsContainer .right .ant-tabs {
+  width: 400px;
+}
+.newsContainer .right .ant-card{
+  box-shadow:none;
+}
+.newsContainer .right .ant-card-body a{
+  color: #555;
+}
+.newsContainer .right .ant-card-body a:hover{
+  color: red;
+}
+.newsContainer .right .ant-card-body li {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
