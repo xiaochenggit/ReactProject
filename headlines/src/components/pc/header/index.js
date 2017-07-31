@@ -25,7 +25,8 @@ class Header extends Component {
             hasLogined: false,
             userNickName: '',
 			userId: 0,
-			confirmDirty: false,
+            confirmDirty: false,
+            modalKey: 0,
         }
 		this.handleClick = this.handleClick.bind(this);
 		this.login = this.login.bind(this);
@@ -34,7 +35,8 @@ class Header extends Component {
 	handleClick(e) {
 		if (e.key === 'register') {
 			this.setState({
-				modalVisible: true
+                modalVisible: true,
+                modalKey: this.state.modalKey + 1
 			})
 		}
 		this.setState({
@@ -142,6 +144,7 @@ class Header extends Component {
 					visible={this.state.modalVisible}
 					onOk={() => this.setModalVisible(false)}
 					onCancel={() => this.setModalVisible(false)}
+                    key={this.state.modalKey}
 					>
 					<Tabs defaultActiveKey="1" onChange={this.callback.bind(this)}>
 						<TabPane tab="注册" key="1">

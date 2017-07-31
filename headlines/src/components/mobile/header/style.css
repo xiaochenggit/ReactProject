@@ -1,6 +1,9 @@
 .mobileheader{
-    padding: 0.4rem;
+    padding: 0.4rem 0.5rem;
     border-bottom: 1px solid #108ee9;
+}
+.mobileheader .logo{
+    display: inline-block;
 }
 .mobileheader .logo span{
     font-size: 1.4rem;
@@ -10,4 +13,40 @@
 .mobileheader .logo img{
     width: 38px;
     height: 38px;
+    float: left;
+}
+.mobileheader i {
+    font-size: 1.4rem;
+    float: right;
+    margin-top: 0.3rem;
+}
+.mobileheader .dropdownWarp{
+    float: right;
+    margin-top: 0.1rem;
+}
+@media (max-width: 768px) {
+    .ant-modal {
+        min-width: 90% !important;
+        margin: 10px;
+    }
+}
+/* use css to set position of modal */
+.vertical-center-modal {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.vertical-center-modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  width: 0;
+}
+
+.vertical-center-modal .ant-modal {
+  display: inline-block;
+  vertical-align: middle;
+  top: 0;
+  text-align: left;
 }

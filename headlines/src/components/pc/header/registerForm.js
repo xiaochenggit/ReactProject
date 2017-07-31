@@ -45,7 +45,8 @@ class RegisterForm extends Component {
 			}
 		}
 		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.props.action
-		+ "&username="+formData.userName+"&password="+formData.password, myFetchOptions)
+        + "&username=" + formData.userName + "&password=" + formData.password + "&confirm=" 
+        + formData.confirm, myFetchOptions)
 		.then((data) => {
 			this.props.login(formData.userName,Math.round(Math.random() * 100000),'注册成功！');
 		})
