@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-// import {Link} from 'react-router';
+import { Link } from 'react-router-dom';
 import {Card} from 'antd';
 
 class NewsBlock extends Component {
@@ -27,7 +27,7 @@ class NewsBlock extends Component {
         let news = this.state.news;
         let newsList = news.length ? 
         news.map((item, index) => 
-            <li key={index}><a href={'detail/' + item.uniquekey}>{item.title}</a></li>
+            <li key={index}><Link to={'detail/' + item.uniquekey}>{item.title}</Link></li>
         )
         : '没有数据';
         return(

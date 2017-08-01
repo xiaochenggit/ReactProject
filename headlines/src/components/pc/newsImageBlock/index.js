@@ -1,4 +1,5 @@
 import React , { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {Card} from 'antd'
 import './style.css';
 
@@ -27,12 +28,12 @@ class NewsImageBlock extends Component {
         news.map((item, index) => 
             <div className='newsImageItem' key={index} style={{width: this.props.itemWidth}}>
                 <div className="custom-image">
-                    <a href={item.url}>
+                    <Link to={'detail/' + item.uniquekey}>
                         <img alt="example" width="100%" src={item.thumbnail_pic_s} />
                         <h3>
                             {item.title}
                         </h3>
-                    </a>
+                    </Link>
                 </div>
                 <div className="custom-card">
                     <p>{item.author_name}</p>

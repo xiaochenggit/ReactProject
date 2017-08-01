@@ -1,0 +1,17 @@
+.detailNew{
+    font-size: 1rem;
+    font-family: '微软雅黑';
+}
+.detailNew .src{
+    color: #bb0707;
+}
+.detailNew .txt{
+    margin: 0.2rem 0;
+}
+.detailNew img{
+    max-width: 100%;
+    width: 600px;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
