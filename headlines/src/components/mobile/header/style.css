@@ -24,15 +24,6 @@
     float: right;
     margin-top: 0.1rem;
 }
-.mobileBar .ant-tabs-nav{
-    width: calc(100% * 8 / 3)
-}
-.mobileBar .ant-tabs-nav .ant-tabs-tab{
-    margin-right: 0px;
-    text-align: center;
-    width: calc(100% / 8);
-    padding: 0.6rem 8px;
-}
 @media (max-width: 768px) {
     .ant-modal {
         min-width: 90% !important;

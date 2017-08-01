@@ -1,0 +1,21 @@
+.newsImageBlock{
+    margin-top: 0.5rem;
+}
+.newsImageBlock .ant-card-body{
+    padding: 0px 0px 0px 12px;
+}
+.newsImageBlock .newsImageItem {
+    padding: 12px 0px;
+    float: left;
+    margin-right: 12px;
+}
+.newsImageBlock .newsImageItem h3{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #555;
+}
+.newsImageBlock .newsImageItem .custom-image:hover h3{
+    color: red;
+}

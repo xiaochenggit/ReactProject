@@ -15,9 +15,8 @@ class NewsBlock extends Component {
             method: 'GET'
         };
         let count = this.props.count || 10;
-        fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=' + this.props.type
-        + '&count=' + count,
-        fetchOptions).then(res => res.json())
+        fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=' 
+        + this.props.type + '&count=' + count,fetchOptions).then(res => res.json())
         .then((data) => {
             this.setState({
                 news: data

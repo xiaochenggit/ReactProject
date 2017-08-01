@@ -1,0 +1,12 @@
+.mobileBar .ant-tabs-nav{
+    width: calc(100% * 8 / 3)
+}
+.mobileBar .ant-tabs-nav .ant-tabs-tab{
+    margin-right: 0px;
+    text-align: center;
+    width: calc(100% / 8);
+    padding: 0.6rem 8px;
+}
+.mobileBar .ant-tabs-bar{
+    margin-bottom: 0px;
+}

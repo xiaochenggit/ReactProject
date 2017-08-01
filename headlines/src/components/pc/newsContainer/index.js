@@ -1,8 +1,10 @@
 import React , { Component } from 'react';
-import { Row, Col, Carousel, Tabs, Icon} from 'antd';
+import { Row, Col, Tabs, Icon} from 'antd';
 import NewsBlock from '../newsBlock/';
+import NewsImageBlock from '../newsImageBlock/';
+import Banner from '../banner/';
+
 import './style.css';
-const bannerImg = require('../../../img/2.jpg');
 const TabPane = Tabs.TabPane;
 
 class NewsContainer extends Component {
@@ -13,28 +15,8 @@ class NewsContainer extends Component {
                     <Col span={2}></Col>
                     <Col span={20}>
                         <div className='left'>
-                            <Carousel autoplay>
-                                <div>
-                                    <a href='http://www.baidu.com' target='_blank' rel="noopener noreferrer">
-                                        <img src={bannerImg} alt='bannerimg'></img>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href='http://www.baidu.com' rel="noopener noreferrer">
-                                        <img src={bannerImg} alt='bannerimg'></img>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href='http://www.baidu.com' rel="noopener noreferrer">
-                                        <img src={bannerImg} alt='bannerimg'></img>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href='http://www.baidu.com' rel="noopener noreferrer">
-                                        <img src={bannerImg} alt='bannerimg'></img>
-                                    </a>
-                                </div>
-                            </Carousel>
+                            <Banner/>
+                            <NewsImageBlock title='国际新闻' count={6} type='guoji' width='480px' itemWidth={(480 - 26 - (3-1) * 12) / 3 + 'px'}/>
                         </div>
                         <div className='right'>
                             <Tabs defaultActiveKey="2" animated={{'tabPane':false}}>
