@@ -1,4 +1,5 @@
 import React , {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {Card} from 'antd';
 import './style.css';
 
@@ -27,15 +28,15 @@ class NavNewsList extends Component {
         news.map((item, index) =>
             <li key={index}>
                 <div className='newsimgGroup'>
-                    <a href={item.url}>
+                    <Link to={'/detail' + item.uniquekey}>
                         <img src={item.thumbnail_pic_s} alt={item.title}/>
-                    </a>
+                    </Link>
                 </div>
                 <div className="newsDesGroup">
                     <p className="newsTitle">
-                        <a href={item.url}>
+                        <Link to={'/detail/' + item.uniquekey}>
                             {item.title}
-                        </a>
+                        </Link>
                     </p>
                     <p className='newsTypeGroup'>
                         <span className='newsType'>{item.realtype}</span>

@@ -1,0 +1,21 @@
+.MobiledetailNew{
+    padding: 0 0.5rem;
+}
+.MobiledetailNew .src{
+    color: #bb0707;
+}
+.MobiledetailNew .txt{
+    margin: 0.2rem 0;
+}
+.MobiledetailNew img{
+    max-width: 100%;
+    width: 600px;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+.MobiledetailNew .article-content{
+ margin-top: 0.8rem;
+ padding-top: 0.8rem;
+ border-top: 2px solid #ccc;
+}
