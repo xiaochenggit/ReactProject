@@ -1,12 +1,14 @@
 import React , { Component } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, BackTop} from 'antd';
+import NewImageBlock from '../newsImageBlock';
 import './style.css';
 
 class DetailNew extends Component {
     constructor() {
         super();
         this.state = {
-            newsItem: {}
+            newsItem: {},
+            type: 'top'
         }
     }
 
@@ -19,10 +21,41 @@ class DetailNew extends Component {
         fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnewsitem&uniquekey=' + 
         uniquekey, fetchOptions).then(res => res.json())
         .then((json) => {
+            document.title = json.title + ' — Headlines';
+            let type = '';
+            switch (json.realtype) {
+                case "头条":
+                    type = 'top';
+                    break;
+                case "社会":
+                    type = 'shehui';
+                    break;
+                case "国内":
+                    type = 'guonei';
+                    break;
+                case "国际":
+                    type = 'guoji';
+                    break;
+                case "娱乐":
+                    type = 'yule';
+                    break;
+                case "体育":
+                    type = 'tiyu';
+                    break;
+                case "科技":
+                    type = 'keji';
+                    break;
+                case "时尚":
+                    type = 'shishang';
+                    break;
+                default:
+                    type = 'top'; 
+                    break;
+            };
             this.setState({
-                newsItem: json
+                newsItem: json,
+                type: type
             });
-            document.title = json.title + ' — Headlines'
         });
     }
 
@@ -35,8 +68,11 @@ class DetailNew extends Component {
                 <Col span={14}>
                     <div className='detailNew' dangerouslySetInnerHTML={{__html: newHTML}}></div>
                 </Col>
-                <Col span={6}></Col>
+                <Col span={6}>
+                    <NewImageBlock type={this.state.type} count="10" width="100%" itemWidth="calc(100% / 2)" />
+                </Col>
                 <Col span={2}></Col>
+                <BackTop />
             </Row>
         )
     }

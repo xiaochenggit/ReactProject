@@ -28,7 +28,7 @@ class NewsImageBlock extends Component {
         news.map((item, index) => 
             <div className='newsImageItem' key={index} style={{width: this.props.itemWidth}}>
                 <div className="custom-image">
-                    <Link to={'detail/' + item.uniquekey}>
+                    <Link to={'detail/' + item.uniquekey} target="_blank">
                         <img alt="example" width="100%" src={item.thumbnail_pic_s} />
                         <h3>
                             {item.title}

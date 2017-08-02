@@ -16,7 +16,9 @@ class NewsContainer extends Component {
                     <Col span={20}>
                         <div className='left'>
                             <Banner/>
-                            <NewsImageBlock title='国际新闻' count={6} type='guoji' width='480px' itemWidth={(480 - 26 - (3-1) * 12) / 3 + 'px'}/>
+                            <NewsImageBlock title='国际新闻' count={6} type='guoji' width='100%' 
+                            itemWidth="calc(100% / 2)"
+                            />
                         </div>
                         <div className='right'>
                             <Tabs defaultActiveKey="2" animated={{'tabPane':false}}>

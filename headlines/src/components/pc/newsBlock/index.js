@@ -27,7 +27,9 @@ class NewsBlock extends Component {
         let news = this.state.news;
         let newsList = news.length ? 
         news.map((item, index) => 
-            <li key={index}><Link to={'detail/' + item.uniquekey}>{item.title}</Link></li>
+            <li key={index}>
+                <Link to={'detail/' + item.uniquekey} target="_blank">{item.title}</Link>
+            </li>
         )
         : '没有数据';
         return(
