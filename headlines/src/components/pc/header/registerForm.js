@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 const FormItem = Form.Item;
 
 class RegisterForm extends Component {
@@ -37,19 +37,35 @@ class RegisterForm extends Component {
 		let myFetchOptions = {
 			method: 'GET'
 		};
-		let formData = this.props.form.getFieldsValue();
 		let error = this.props.form.getFieldsError();
 		for (var key in error) {
 			if(error[key] !== undefined){
 				return false;
 			}
-		}
+        }
+        let formData = this.props.form.getFieldsValue();
 		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.props.action
-        + "&username=" + formData.userName + "&password=" + formData.password + "&confirm=" 
+        + "&r_userName=" + formData.userName + "&r_password=" + formData.password + "&r_confirmPassword=" 
         + formData.confirm, myFetchOptions)
-		.then((data) => {
-			this.props.login(formData.userName,Math.round(Math.random() * 100000),'注册成功！');
-		})
+		.then( res => res.json())
+        .then( (data) => {
+            if(data === true) {
+               fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + 'login'
+                    + "&username="+formData.userName+"&password="+formData.password, myFetchOptions)
+                .then( res => res.json())
+                .then( (data) => {
+                    if(data) {
+                        this.props.login(formData.userName,data.UserId,'注册成功!');
+                    }  else {
+                        message.error('账号或密码错误！');
+                    }
+                });
+            } else {
+               message.error("此帐号已经注册过了！");
+                // this.props.login(formData.userName,Math.round(Math.random() * 100000 + 1),'注册成功！');
+            }
+        });
+        
 	}
     render() {
         const { getFieldDecorator } = this.props.form;

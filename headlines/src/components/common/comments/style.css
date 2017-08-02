@@ -1,0 +1,23 @@
+.comment h2{
+    font-size: 1.4rem;
+    line-height: 2.8rem;
+    padding-left: 0.5rem;
+}
+.comment .ant-card-head{
+    padding: 0px 0.5rem;
+    border-bottom: none;
+    height: auto;
+    line-height: 1.2rem;
+}
+.comment .ant-card-extra{
+    right: 0.5rem;
+}
+.comment .ant-card-body{
+    padding: 0.5rem;
+}
+.comment .ant-card{
+    margin-bottom: 0.5rem;
+}
+.comment .ant-pagination{
+    text-align: center;
+}

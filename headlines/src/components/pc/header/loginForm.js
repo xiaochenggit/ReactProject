@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
@@ -28,9 +28,14 @@ class LoginForm extends React.Component {
 		}
 		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.props.action
 		+ "&username="+formData.userName+"&password="+formData.password, myFetchOptions)
-		.then((data) => {
-			this.props.login(formData.userName,Math.round(Math.random() * 100000),'登陆成功!');
-		})
+    .then( res => res.json())
+    .then( (data) => {
+      if(data) {
+        this.props.login(formData.userName,data.UserId,'登陆成功!');
+      }  else {
+        message.error('账号或密码错误！');
+      }
+    });
 	}
   render() {
     const { getFieldDecorator } = this.props.form;

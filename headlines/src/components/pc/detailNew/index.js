@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import { Row, Col, BackTop} from 'antd';
 import NewImageBlock from '../newsImageBlock';
+import Comments from '../../common/comments';
 import './style.css';
 
 class DetailNew extends Component {
@@ -67,6 +68,7 @@ class DetailNew extends Component {
                 <Col span={2}></Col>
                 <Col span={14}>
                     <div className='detailNew' dangerouslySetInnerHTML={{__html: newHTML}}></div>
+                    <Comments uniquekey={this.props.match.params.uniquekey}/>
                 </Col>
                 <Col span={6}>
                     <NewImageBlock type={this.state.type} count="10" width="100%" itemWidth="calc(100% / 2)" />

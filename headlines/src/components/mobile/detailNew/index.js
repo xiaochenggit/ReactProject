@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import { BackTop } from 'antd';
+import Comments from '../../common/comments';
 import './style.css';
 class DetailNew extends Component {
     constructor() {
@@ -31,6 +32,7 @@ class DetailNew extends Component {
         return(
             <div>
                 <div className='MobiledetailNew' dangerouslySetInnerHTML={{__html: newHTML}}></div>
+                <Comments uniquekey={this.props.match.params.uniquekey}/>
                 <BackTop />
             </div>
             

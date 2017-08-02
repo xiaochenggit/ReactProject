@@ -30,7 +30,18 @@ class Header extends Component {
         }
 		this.handleClick = this.handleClick.bind(this);
 		this.login = this.login.bind(this);
-	}
+    }
+    componentDidMount() {
+        let userNickName = localStorage.getItem('userNickName');
+        let userId = Number(localStorage.getItem('userId'));
+        if(userId !== 0) {
+            this.setState({
+                hasLogined: true,
+                userNickName,
+                userId
+            })
+        }
+    }
 	// 导航切换点击 当点击 注册/登录 的时候弹出注册、登陆框
 	handleClick(e) {
 		if (e.key === 'register') {
@@ -68,12 +79,14 @@ class Header extends Component {
 	 * @param {String} mes 登录还是注册
 	 * @memberof Header
 	 */
-	login(userName,userId,mes) {
+	login(userNickName,userId,mes) {
 		this.setState({
 			hasLogined: true,
-			userNickName: userName,
-			userId: userId
-		});
+			userNickName,
+			userId
+        });
+        localStorage.setItem('userId',userId);
+        localStorage.setItem('userNickName',userNickName);
 		this.setModalVisible(false);
 		message.success(mes);
 	}
@@ -82,7 +95,9 @@ class Header extends Component {
 			hasLogined: false,
 			userNickName: '',
 			userId: 0
-		})
+        });
+        localStorage.setItem('userId', 0);
+        localStorage.setItem('userNickName',"");
 	}
     render() {
 		let state = this.state;
