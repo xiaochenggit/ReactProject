@@ -8,6 +8,9 @@
     margin-top: 0.2rem;
     cursor: pointer;
 }
+.collection .anticon-star{
+    color: red;
+}
 @media screen and (max-width: 800px) {
     .ant-notification{
         max-width: 90%;

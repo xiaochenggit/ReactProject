@@ -1,0 +1,33 @@
+.userCollections{
+    padding: 0px 0.5rem;
+}
+.userCollections .ant-card-head{
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    border-bottom: none;
+    height: auto;
+    line-height: 1.2rem;
+}
+.userCollections .ant-card-extra{
+    right: 0.5rem;
+}
+.userCollections .ant-card-body{
+    padding: 0.5rem;
+}
+.userCollections .ant-card{
+    margin-bottom: 0.5rem;
+}
+.userCollections .title{
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.userCollections .title a{
+    color: #555;
+}
+.userCollections .title a:hover{
+    color: red;
+}
+.userCollections .ant-card-extra{
+    top: 0.5rem;
+}
