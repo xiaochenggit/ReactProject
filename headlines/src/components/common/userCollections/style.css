@@ -31,3 +31,6 @@
 .userCollections .ant-card-extra{
     top: 0.5rem;
 }
+.userCollections .ant-pagination {
+    text-align: center;
+}

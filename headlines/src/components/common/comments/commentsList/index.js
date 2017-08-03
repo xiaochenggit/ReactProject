@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import CommentsPage from '../commentsPage/';
+import Paging from '../../paging/';
 import CommentsForm from '../commentsForm/';
 import { Card } from 'antd';
 
@@ -72,7 +72,7 @@ class CommentsList extends Component {
             <div className='commentsList'>
                 <CommentsForm uniquekey={this.props.uniquekey} commentSuccess={this.componentDidMount.bind(this)}/>
                 {commentsHTML}
-                <CommentsPage showQuickJumper={this.state.Jumper} current={this.state.pageIndex}  
+                <Paging showQuickJumper={this.state.Jumper} current={this.state.pageIndex}  
                 defaultPageSize={this.state.pageSize}
                 total={this.state.commentArr.length} 
                 onChange={this.onChange.bind(this)} />

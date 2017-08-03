@@ -4,6 +4,7 @@ import Header from './header/';
 import Footer from './footer/';
 import NewsContainer from './newsContainer/';
 import DetailNew from './detailNew/';
+import UserCenter from './userCenter/';
 
 class PcIndex extends Component {
     render() {
@@ -14,6 +15,7 @@ class PcIndex extends Component {
                     <div>
                         <Route exact path="/" component={NewsContainer}/>
                         <Route path="/detail/:uniquekey" component={DetailNew}/>
+                        <Route path="/usercenter" component={UserCenter}/>
                     </div>
                 </Router>
                 <Footer/>

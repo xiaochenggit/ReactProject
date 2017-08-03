@@ -104,7 +104,7 @@ class Header extends Component {
         let userShow = state.hasLogined ?
         <Menu.Item key="logout" className='register'>
             <Button type="primary">{state.userNickName}</Button>&nbsp;&nbsp;
-            <a href='http://www.baidu.com' target='_blank' style={{display:'inline-block'}} rel="noopener noreferrer">
+            <a href='/usercenter' target='_blank' style={{display:'inline-block'}} rel="noopener noreferrer">
                 <Button type="primary">个人中心</Button>
             </a>&nbsp;&nbsp;
             <Button onClick={this.layOut.bind(this)}>退出</Button>

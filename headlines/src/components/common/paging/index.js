@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 import { Pagination } from 'antd';
 
-class CommentsPage extends Component {
+class Paging extends Component {
 
     render() {
         return(
@@ -11,4 +11,4 @@ class CommentsPage extends Component {
 
 }
 
-export default CommentsPage;
+export default Paging;
