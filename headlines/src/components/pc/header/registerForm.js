@@ -50,7 +50,7 @@ class RegisterForm extends Component {
 		.then( res => res.json())
         .then( (data) => {
             if(data === true) {
-               fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + 'login'
+               fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=login"
                     + "&username="+formData.userName+"&password="+formData.password, myFetchOptions)
                 .then( res => res.json())
                 .then( (data) => {

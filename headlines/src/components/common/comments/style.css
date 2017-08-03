@@ -21,3 +21,9 @@
 .comment .ant-pagination{
     text-align: center;
 }
+.comment-form{
+    padding: 0px 0.5rem;
+}
+.comment-form .ant-form-item{
+    margin-bottom: 0.5rem;
+}

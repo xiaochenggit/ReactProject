@@ -1,6 +1,5 @@
 import React , { Component } from 'react';
 import CommentsList from './commentsList/';
-import CommentsForm from './commentsForm/';
 import './style.css';
 
 class Comments extends Component {
@@ -8,7 +7,6 @@ class Comments extends Component {
         return(
             <div className='comment'>
                 <h2>留言板</h2>
-                <CommentsForm uniquekey={this.props.uniquekey}/>
                 <CommentsList uniquekey={this.props.uniquekey}/>
             </div>
         )
