@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import { Form, Input, Button, message } from 'antd';
+import Collection from '../../collection/';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -51,6 +52,7 @@ class CommentsForm extends Component {
                 </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" className="comment-form-button">提交</Button>
+                    <Collection uniquekey={this.props.uniquekey}/>
                 </FormItem>
             </Form>
         )
