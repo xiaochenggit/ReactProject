@@ -95,14 +95,14 @@ class Header extends Component {
         let state = this.state;
         const menu = (
         <Menu>
+            {/* <Menu.Item>
+                {localStorage.getItem('userNickName')}
+            </Menu.Item> */}
             <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">{state.userNickName}</a>
+                <a target="_blank" rel="noopener noreferrer" href='/usercenter' >个人中心</a>
             </Menu.Item>
             <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">个人中心</a>
-            </Menu.Item>
-            <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" onClick={this.layOut.bind(this)}>退出</a>
+                <a target="_blank" rel="noopener noreferrer" onClick={this.layOut.bind(this)}>退出</a>
             </Menu.Item>
         </Menu>
         );

@@ -1,0 +1,9 @@
+.mobileUserCenter .ant-tabs-nav{
+    width: calc(100% * 3 / 2);
+}
+.mobileUserCenter .ant-tabs-nav .ant-tabs-tab{
+    margin-right: 0px;
+    width: calc(100% / 3);
+    padding: 8px 0px;
+    text-align: center;
+}

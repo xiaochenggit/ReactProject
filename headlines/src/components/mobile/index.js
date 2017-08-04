@@ -4,6 +4,7 @@ import Header from './header/';
 import Footer from './footer/';
 import DetailNew from './detailNew/';
 import Nav from './nav/';
+import UserCenter from './userCenter/';
 
 class MobileIndex extends Component {
     render() {
@@ -14,6 +15,7 @@ class MobileIndex extends Component {
                     <div>
                         <Route exact path="/" component={Nav}/>
                         <Route path="/detail/:uniquekey" component={DetailNew}/>
+                        <Route path="/usercenter" component={UserCenter}/>
                     </div>
                 </Router>
                 <Footer/>

@@ -2,6 +2,8 @@ import React , { Component }  from 'react';
 import { Row, Col, Tabs, Icon } from 'antd';
 import { Redirect } from 'react-router-dom';
 import UserCollections from '../../common/userCollections/';
+import UserComments from '../../common/userComments/';
+import UserChangeInfo from '../../common/userChangeInfo/';
 const TabPane = Tabs.TabPane;
 class UserCenter extends Component {
 
@@ -22,10 +24,10 @@ class UserCenter extends Component {
                             <UserCollections />
                         </TabPane>
                         <TabPane tab={<span><Icon type="apple" />用户的评论</span>} key="2">
-                            用户的评论
+                            <UserComments />
                         </TabPane>
-                        <TabPane tab={<span><Icon type="android" />更换头像</span>} key="3">
-                            更换头像
+                        <TabPane tab={<span><Icon type="android" />更改信息</span>} key="3">
+                            <UserChangeInfo/>
                         </TabPane>
                     </Tabs>
                 </Col>
