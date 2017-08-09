@@ -1,0 +1,10 @@
+/* Base Application Styles */
+html {
+  color: #fff;
+  background: #222;
+  font-size: 10px;
+  font-family: "Times New Roman",Georgia,Serif;
+}
+body {
+  background-color: #F5F5F5;
+}
