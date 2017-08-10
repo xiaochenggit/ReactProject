@@ -30,7 +30,6 @@ class CommentsList extends Component {
      * @memberof CommentsList
      */
     onChange(pageNumber) {
-
         this.setState({
             pageIndex: pageNumber,
             comments: this.state.commentArr.slice((pageNumber - 1) * this.state.pageSize , pageNumber * this.state.pageSize)

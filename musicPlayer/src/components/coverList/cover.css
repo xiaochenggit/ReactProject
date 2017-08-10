@@ -1,0 +1,13 @@
+.cover .custom-image img{
+    width: 100%;
+    height:  auto;
+    border-radius: 0.3rem;
+}
+.cover {
+    float: left;
+    margin: 1rem;
+    cursor: pointer;
+}
+.coverList .cover .ant-card-body{
+    padding:1rem;
+}

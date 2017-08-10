@@ -1,0 +1,39 @@
+.musicList {
+    margin-top: 1rem;
+}
+.musicList .musicListTop{
+    overflow: hidden;
+    margin: 0 1rem;
+}
+.musicList .musicListTop img{
+    float: left;
+    width: 200px;
+    height: auto;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+.musicList .musicListTop h2{
+    font-size: 2rem;
+    line-height: 3rem;
+}
+.musicList .musicListTop p{
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+.musicList .musicGroup{
+    overflow: hidden;
+    line-height: 4rem;
+}
+.musicList .musicGroup img{
+    width: 4rem;
+    height: auto;
+    vertical-align: top;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+.musicList .musicGroup .ant-card{
+    margin: 0.5rem 0.5rem;
+}
+.musicList .musicGroup .ant-card-body{
+    padding: 1rem;
+}
