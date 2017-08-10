@@ -15,9 +15,8 @@ class MusicList extends Component {
             billboard: '',
             search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type='
         }
-        this.onChange = this.onChange.bind(this);
     }
-    onChange(pageNumber) {
+    onChange1(pageNumber) {
         this.setState({
             pageIndex: pageNumber,
             song_list: this.state.song_listArr.slice((pageNumber - 1) * this.state.pageSize , pageNumber * this.state.pageSize)
@@ -37,7 +36,6 @@ class MusicList extends Component {
                 let billboard = data.billboard;
                 this.setState({
                     Jumper:  document.body.offsetWidth >= 800,
-                    pageIndex,
                     song_listArr: data.song_list,
                     song_list: data.song_list.slice((pageIndex - 1) * this.state.pageSize , this.state.pageSize),
                     billboard: billboard,
@@ -47,9 +45,8 @@ class MusicList extends Component {
         });
     }
     render() {
-        let state = this.state;
-        let musicGroupHTML = state.song_list.length ? 
-        state.song_list.map((item,index) => 
+        let musicGroupHTML = this.state.song_list.length ? 
+        this.state.song_list.map((item,index) => 
             <Card key={index}>
                 <Row>
                     <Col span={6}>
@@ -69,21 +66,21 @@ class MusicList extends Component {
                     <Col span={2}></Col>
                     <Col span={20}>
                         <div className='musicListTop'>
-                            <img src={state.img} alt={state.billboard.name}/>
+                            <img src={this.state.img} alt={this.state.billboard.name}/>
                             <div className='musicListdes'>
-                                <h2>{state.billboard.name}</h2>
-                                <p>{state.billboard.comment}</p>
-                                <p>{state.billboard.update_date}</p>
+                                <h2>{this.state.billboard.name}</h2>
+                                <p>{this.state.billboard.comment}</p>
+                                <p>{this.state.billboard.update_date}</p>
                             </div>
                         </div>
                         <div className='musicGroup'>
                             {musicGroupHTML}
-                            <Paging showQuickJumper={this.state.Jumper} 
+                        </div>
+                        {/* <Paging showQuickJumper={this.state.Jumper} 
                                 current={this.state.pageIndex}  
                                 defaultPageSize={this.state.pageSize}
                                 total={this.state.song_listArr.length} 
-                                onChange={this.onChange} />
-                        </div>
+                                onChange={this.onChange1.bind(this)}/>  */}
                     </Col>
                     <Col span={2}></Col>
                 </Row>
