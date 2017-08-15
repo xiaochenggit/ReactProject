@@ -1,12 +1,14 @@
 import React , { Component } from 'react';
 import './style.css';
+// 进度条
+
 class Progress extends Component {
     hanleClick(e) {
         // 获得元素
         var progressBar = this.refs.progressBar;
         // 百分比 点击的位置 - 元素距离左边的位置  除以 元素的宽度
         var percent  = (e.clientX - progressBar.getBoundingClientRect().left) / progressBar.clientWidth;
-        this.props.changePercent(percent)
+        this.props.changePercent(percent);
     }
     render() {
         return(

@@ -4,8 +4,10 @@ import Progress from './progress/';
 import './style.css';
 class ProgressPage extends Component {
     /**
-     * @parma {Number} percent 进度条百分比（1-100） 默认0
      * @parma {Number} duration 音乐最大时长 默认0
+     * @parma {Number} percent 播放进度条百分比（1-100） 默认0
+     * @parma {Number} volume 音量控制条百分比（1-100） 默认0
+     * @parma {Boolean} isPlay 播放状态 默认 false 
      */
     constructor() {
         super();
@@ -19,9 +21,7 @@ class ProgressPage extends Component {
         this.prev = this.prev.bind(this);
     }
     /**
-     * 更新播放时间
-     * @parma {percent} percent 百分比(0-1) 
-     * 总时间 * 百分比 
+     * 更新
      */
     componentDidMount() {
         $('#player').bind($.jPlayer.event.timeupdate, (e) => {
@@ -31,17 +31,30 @@ class ProgressPage extends Component {
                 volume: e.jPlayer.status.volume * 100,
                 percent 
             });
-            if(percent >= 99.9) {
+            // 播放完之后自动切歌  
+            if(percent >= 99.5) {
                 this.next();
             }
         });
     }
+
+    /**
+     * 点击进度条 更新播放进度
+     * @param {Float} percent 点击进度条回调的参数 0 - 1
+     */
     changePercent(percent){
         $("#player").jPlayer('play', this.state.duration * percent);
     }
+
+     /**
+     * 点击进度条 更新播放音量
+     * @param {Float} percent 点击进度条回调的参数 0 - 1
+     */
     changeVolume(percent){
         $("#player").jPlayer('volume', percent);
     }
+
+    // 改变播放状态
     changePlay(){
         if(this.state.isPlay) {
             $("#player").jPlayer('pause');
@@ -52,12 +65,14 @@ class ProgressPage extends Component {
             isPlay: !this.state.isPlay
         });
     }
+    // 上一曲 切歌完之后 状态改为播放
     next() {
         this.props.changeMusicIndex(this.props.musicIndex + 1);
         this.setState({
             isPlay: true
         })
     }
+    // 下一曲 切歌完之后 状态改为播放
     prev() {
         this.props.changeMusicIndex(this.props.musicIndex - 1);
         this.setState({

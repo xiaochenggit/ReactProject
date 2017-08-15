@@ -1,17 +1,23 @@
+// 音乐播放器控制部分
 import React , { Component } from 'react';
 import ProgressPage from '../progressPage/';
 
 class Music extends Component {
     constructor() {
         super();
+        /**
+         * @param {Number} index 音乐数组下标 默认 0
+         * @param {Array} list 音乐数组 默认 []
+         * @param {Object} music 当前播放音乐的信息 默认 {}
+         */
         this.state = {
             index: 0,
             list: [],
-            music: {
-            }
+            music: {}
         }
     }
     componentWillMount() {
+        // 默认加载本地音乐 json 文件
         let fetchOptions = {
             methods: 'GET'
         };
@@ -24,22 +30,22 @@ class Music extends Component {
         })
     }
     componentDidMount(){
-        // 设置音乐格式
+        // 设置音乐 地址 状态(暂停 || 开始) 音量 格式
         let that = this;
         $('#player').jPlayer({
-        ready: function() {
-            $(this).jPlayer('setMedia',{
-                mp3: that.state.music.file
-            }).jPlayer('pause');
-        },
-        volume: 0.5,
-        supplied: 'mp3, m4a',
-        wmode: 'window'
+            ready: function() {
+                $(this).jPlayer('setMedia',{
+                    mp3: that.state.music.file
+                }).jPlayer('pause');
+            },
+            volume: 0.5,
+            supplied: 'mp3, m4a',
+            wmode: 'window'
         });
-        // 绑定
-        // percent: Math.round(e.jPlayer.status.currentTime) 具体播放时间
     }
+    // 切歌操作
     changeMusicIndex(index) {
+        // 判断边界
         let length = this.state.list.length;
         if(index > length - 1) {
             index = 0;
@@ -48,6 +54,7 @@ class Music extends Component {
             index  = length - 1;
         }
         let that = this;
+        // 改变音乐的播放地址
         $('#player').jPlayer('setMedia',{
             mp3: that.state.list[index].file
         }).jPlayer('play');  

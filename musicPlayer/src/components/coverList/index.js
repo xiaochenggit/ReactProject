@@ -1,3 +1,5 @@
+// 音乐分类列表页面
+
 import React , { Component } from 'react';
 import Cover from './cover';
 import Header from '../header/';
@@ -13,6 +15,7 @@ class CoverList extends Component {
         }
     }
     componentWillMount() {
+        // 获得分类列表的 json 文件  
         let fetchOptions = {methods: 'GET'};
         fetch('/js/coverList.json',fetchOptions).then(res => res.json())
         .then(list =>{
@@ -30,7 +33,9 @@ class CoverList extends Component {
         : '暂无数据';
         return(
             <div className='main'>
+                {/*公共头部  */}
                 <Header/>
+                {/*列表部分  */}
                 <div className="coverList">
                     <Row>
                         <Col span={2}></Col>

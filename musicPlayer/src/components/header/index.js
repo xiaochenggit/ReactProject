@@ -3,6 +3,7 @@ import { Row, Col } from 'antd';
 import {Link} from 'react-router-dom';
 import './style.css';
 const logo = require('../../images/logo.png');
+// 公共头部信息
 class Header extends Component {
     render() {
         return(

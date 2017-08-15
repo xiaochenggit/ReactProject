@@ -2,7 +2,19 @@ import React , { Component } from 'react';
 import { Row, Col , Card , Pagination} from 'antd';
 import Header from '../header/';
 import './index.css';
+// 音乐列表 
+
 class MusicList extends Component {
+    /**
+     * @param {Array} song_listArr 所有音乐数组 默认[]
+     * @param {Array} song_list 当前页音乐列表 []
+     * @param {Number} pageSize 每页音乐条数 默认 10
+     * @param {Number} pageIndex 当前页页码 默认 1
+     * @param {Boolean} Jumper 分页是否需要搜索页功能 默认 false
+     * @param {String}  img 此列表头图链接 默认''
+     * @param {Objeact} billboard 当前列表信息 默认{}
+     * @param {String} search 接口链接
+     */
     constructor() {
         super();
         this.state = {
@@ -12,10 +24,11 @@ class MusicList extends Component {
             Jumper: false,
             img: '',
             song_list: [],
-            billboard: '',
+            billboard: {},
             search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type='
         }
     }
+    // 改变页码 改变当前页码和当前页音乐数组
     onChange(pageNumber) {
         this.setState({
             pageIndex: pageNumber,
@@ -23,24 +36,11 @@ class MusicList extends Component {
         })
     }
     componentDidMount() {
-        // $.ajax({
-        //     url: 'http://s.music.163.com/search/get/',
-        //     dataType:'jsonp',
-        //     data: {
-        //     'type': 1,
-        //     's': '意外',
-        //     'limit': 20
-        //     },
-        //     jsonp: 'callback',
-        //     cache: false,
-        //     success: function(data) {
-        //     console.log(data)
-        //     }
-        // });
+        // 获得此页面分类 id
         let id = this.props.match.params.id;
-        let pageIndex = 1;
+        let pageIndex = this.state.pageIndex;
+        // 判断是不是本地音乐 不是本地音乐接口获得数据
         if (id != '0') {
-             console.log('2');
             $.ajax({
                 url: this.state.search + id,
                 type: 'POST',
@@ -60,6 +60,7 @@ class MusicList extends Component {
                 }
             });
         } else {
+            // 获得本地音乐列表文件
             let fetchOptions = {methods: 'GET'};
             fetch('/js/musicList.json',fetchOptions).then(res => res.json())
             .then(list =>{
@@ -95,11 +96,13 @@ class MusicList extends Component {
         : '暂无数据';
         return(
             <div className='main'>
+                {/*公共头部  */}
                 <Header />
                 <div className='musicList'> 
                 <Row>
                     <Col span={2}></Col>
                     <Col span={20}>
+                        {/*列表信息  */}
                         <div className='musicListTop'>
                             <img src={this.state.img} alt={this.state.billboard.name}/>
                             <div className='musicListdes'>
@@ -108,9 +111,11 @@ class MusicList extends Component {
                                 <p>{this.state.billboard.update_date}</p>
                             </div>
                         </div>
+                        {/*音乐列表  */}
                         <div className='musicGroup'>
                             {musicGroupHTML}
                         </div>
+                        {/*分页  */}
                         <Pagination style={{display: this.state.song_listArr.length > this.state.pageSize ? 'block' : 'none'}}
                             defaultPageSize={this.state.pageSize}
                             onChange={this.onChange.bind(this)}
