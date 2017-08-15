@@ -45,6 +45,10 @@
     overflow: hidden;
     white-space: nowrap;
 }
+.musicList .musicGroup .ant-col-6 span{
+    padding: 0 0.5rem;
+    cursor: pointer;
+}
 .musicList .musicGroup .ant-col-6+.ant-col-6{
     text-align: center;
 }

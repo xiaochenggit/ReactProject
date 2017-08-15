@@ -1,5 +1,6 @@
 // 音乐播放器控制部分
 import React , { Component } from 'react';
+import PubSub from 'pubsub-js';
 import ProgressPage from '../progressPage/';
 
 class Music extends Component {
@@ -8,13 +9,18 @@ class Music extends Component {
         /**
          * @param {Number} index 音乐数组下标 默认 0
          * @param {Array} list 音乐数组 默认 []
+         * @param {Array} likeMusics 喜欢的音乐的数组 默认[]
          * @param {Object} music 当前播放音乐的信息 默认 {}
          */
         this.state = {
             index: 0,
             list: [],
-            music: {}
+            likeMusics: [],
+            music: {},
+            LickMusicName: 'LICKMUSICS'
         }
+        this.addMusic = this.addMusic.bind(this);
+        this.deleteMusic = this.deleteMusic.bind(this);
     }
     componentWillMount() {
         // 默认加载本地音乐 json 文件
@@ -30,8 +36,12 @@ class Music extends Component {
         })
     }
     componentDidMount(){
-        // 设置音乐 地址 状态(暂停 || 开始) 音量 格式
         let that = this;
+        // 接收 addLive 事件
+        PubSub.subscribe('addLive',function(msg,music){
+            that.addMusic(music);
+        })
+        // 设置音乐 地址 状态(暂停 || 开始) 音量 格式
         $('#player').jPlayer({
             ready: function() {
                 $(this).jPlayer('setMedia',{
@@ -42,6 +52,7 @@ class Music extends Component {
             supplied: 'mp3, m4a',
             wmode: 'window'
         });
+        this.deleteMusic(33467253);
     }
     // 切歌操作
     changeMusicIndex(index) {
@@ -62,6 +73,35 @@ class Music extends Component {
             index,
             music: this.state.list[index]
         });
+    }
+    /**
+     * 添加喜欢的音乐到 存到 localStorage
+     * @param {Object} music 音乐信息
+     */
+    addMusic(music) {
+        let likeMusics = JSON.parse(localStorage.getItem(this.state.LickMusicName)) || [];
+        var obj = {
+            id: music.songinfo.song_id,
+            title: music.songinfo.title,
+            artist_name: music.songinfo.author,
+            file: music.bitrate.file_link,
+            pic_small: music.songinfo.pic_small
+        }
+        likeMusics.push(obj);
+        localStorage.setItem(this.state.LickMusicName, JSON.stringify(likeMusics));
+    }
+    deleteMusic(musicId) {
+        let likeMusics = JSON.parse(localStorage.getItem(this.state.LickMusicName)) || [];
+        if(likeMusics.length === 0) {
+            return false;
+        }
+        likeMusics.forEach(function(element, index) {
+            if(element.id == musicId) {
+                likeMusics.splice(index, 1);
+                return false;
+            }
+        });
+        localStorage.setItem(this.state.LickMusicName, JSON.stringify(likeMusics));
     }
     render(){
         return(

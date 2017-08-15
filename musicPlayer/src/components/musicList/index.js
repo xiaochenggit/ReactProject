@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
-import { Row, Col , Card , Pagination} from 'antd';
+import { Row, Col , Card , Pagination, message} from 'antd';
+import PubSub from 'pubsub-js';
 import Header from '../header/';
 import './index.css';
 // 音乐列表 
@@ -25,7 +26,8 @@ class MusicList extends Component {
             img: '',
             song_list: [],
             billboard: {},
-            search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type='
+            search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=',
+            searchSong: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid='
         }
     }
     // 改变页码 改变当前页码和当前页音乐数组
@@ -33,7 +35,7 @@ class MusicList extends Component {
         this.setState({
             pageIndex: pageNumber,
             song_list: this.state.song_listArr.slice((pageNumber - 1) * this.state.pageSize , pageNumber * this.state.pageSize)
-        })
+        });
     }
     componentDidMount() {
         // 获得此页面分类 id
@@ -78,7 +80,46 @@ class MusicList extends Component {
             });
         }
     }
+    /**
+     * 
+     * @param {Number} musicId 下载歌曲的 id 
+     */
+    downLoad(musicId) {
+        $.ajax({
+            url: this.state.searchSong + musicId,
+            type: 'POST',
+            dataType: 'jsonp',
+            xhrFields : {
+                withCredentials:true
+            },
+            success: (data)=> {
+               window.open(data.bitrate.file_link);
+               message.info('开始下载 ' + data.songinfo.title);
+            },
+            error: (err) => {
+               message.error('下载失败！');
+            }
+        });
+    }
+    // 喜欢 
+    addLike(musicId){
+        $.ajax({
+            url: this.state.searchSong + musicId,
+            type: 'POST',
+            dataType: 'jsonp',
+            xhrFields : {
+                withCredentials:true
+            },
+            success: (data)=> {
+               PubSub.publish('addLive',data);
+            },
+            error: (err) => {
+               message.error('添加失败');
+            }
+        });
+    }
     render() {
+        let id = this.props.match.params.id;
         let musicGroupHTML = this.state.song_list.length ?
         this.state.song_list.map((item,index) =>
             <Card key={index}>
@@ -89,7 +130,10 @@ class MusicList extends Component {
                     </Col>
                     <Col span={6}>{item.artist_name}</Col>
                     <Col span={6}>{item.album_title || '本地'}</Col>
-                    <Col span={6}>下载添加</Col>
+                    <Col span={6}>
+                       {id != '0' ? <span onClick={this.downLoad.bind(this,item.song_id)}>下载</span> : ''}
+                       <span onClick={this.addLike.bind(this,item.song_id)}>添加</span>
+                    </Col>
                 </Row>
             </Card>
         )
