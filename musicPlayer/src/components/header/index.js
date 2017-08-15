@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import { Row, Col } from 'antd';
+import {Link} from 'react-router-dom';
 import './style.css';
 const logo = require('../../images/logo.png');
 class Header extends Component {
@@ -9,10 +10,10 @@ class Header extends Component {
                 <Row>
                     <Col span={2}></Col>
                     <Col span={20}>
-                        <a href='/'>
+                        <Link to='/'>
                             <img src={logo} alt='logo'/>
                             <h2>React Music Player</h2>
-                        </a>
+                        </Link>
                     </Col>
                     <Col span={2}></Col>
                 </Row>

@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import Cover from './cover';
+import Header from '../header/';
 import { Row, Col, Card, Icon } from 'antd';
 import './style.css';
 
@@ -28,18 +29,21 @@ class CoverList extends Component {
         )
         : '暂无数据';
         return(
-            <div className="coverList">
-                <Row>
-                    <Col span={2}></Col>
-                    <Col span={20}>
-                        <Card title="热门推荐"  bordered={false}>
-                            <div>
-                                {listHTML}
-                            </div>
-                        </Card>              
-                    </Col>
-                    <Col span={2}></Col>
-                </Row>
+            <div className='main'>
+                <Header/>
+                <div className="coverList">
+                    <Row>
+                        <Col span={2}></Col>
+                        <Col span={20}>
+                            <Card title="热门推荐"  bordered={false}>
+                                <div>
+                                    {listHTML}
+                                </div>
+                            </Card>              
+                        </Col>
+                        <Col span={2}></Col>
+                    </Row>
+                </div>
             </div>
         )
     }

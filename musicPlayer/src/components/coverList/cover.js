@@ -14,23 +14,32 @@ class Cover extends Component {
         }
     }
     componentWillMount() {
-        $.ajax({
-            url: this.state.search + this.props.id,
-            type: 'POST',
-            dataType: 'jsonp',
-            xhrFields : {
-	       		withCredentials:true
-            },
-            success: (data)=> {
-                let billboard = data.billboard;
-                this.setState({
-                    update_date: billboard.update_date,
-                    name: billboard.name,
-                    comment: billboard.comment,
-                    img: require('../../images/' + this.props.id + '.jpg')
-                });
-            }
-        });
+        if(this.props.id != '0') {
+            $.ajax({
+                url: this.state.search + this.props.id,
+                type: 'POST',
+                dataType: 'jsonp',
+                xhrFields : {
+                    withCredentials:true
+                },
+                success: (data)=> {
+                    let billboard = data.billboard;
+                    this.setState({
+                        update_date: billboard.update_date,
+                        name: billboard.name,
+                        comment: billboard.comment,
+                        img: require('../../images/' + this.props.id + '.jpg')
+                    });
+                }
+            });
+        } else {
+            this.setState({
+                update_date: '今天',
+                name: '本地歌曲',
+                comment: '本地歌曲',
+                img: require('../../images/' + 8 + '.jpg')
+            });
+        }
     }
     render() {
         let state = this.state;
