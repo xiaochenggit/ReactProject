@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import { Row, Col , Icon} from 'antd';
 import Progress from './progress/';
+import PubSub from 'pubsub-js';
 import $ from 'jquery';
 import 'jplayer';
 import './style.css';
@@ -25,6 +26,7 @@ class MusicPage extends Component {
      */
     componentDidMount() {
         $('#player').bind($.jPlayer.event.timeupdate, (e) => {
+            PubSub.publish('getMusicId',this.props.music.song_id);
             let percent = e.jPlayer.status.currentPercentAbsolute;// 播放百分比
             this.setState({
                 duration: e.jPlayer.status.duration,

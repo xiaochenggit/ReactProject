@@ -43,7 +43,7 @@ class Music extends Component {
     }
     componentDidMount(){
         let that = this;
-        // 添加 addLike deleteLike 事件
+        // 添加 addLike deleteLike 音乐播放 改变播放状态 事件
         PubSub.subscribe('addLike',function(msg,music){
             that.addMusic(music);
         });
@@ -52,6 +52,9 @@ class Music extends Component {
         });
         PubSub.subscribe('deleteLike',function(msg,musicId){
             that.deleteMusic(musicId);
+        })
+        PubSub.subscribe('changPlay',function(msg){
+            that.changePlay();
         })
         // 设置音乐 地址 状态(暂停 || 开始) 音量 格式
         $('#player').jPlayer({
@@ -147,6 +150,7 @@ class Music extends Component {
         PubSub.unsubscribe('addLike');
         PubSub.unsubscribe('deleteLike');
         PubSub.unsubscribe('musicPlay');
+        PubSub.unsubscribe('changPlay');
     }
     render(){
         return(

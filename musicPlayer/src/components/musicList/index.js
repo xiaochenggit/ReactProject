@@ -136,7 +136,7 @@ class MusicList extends Component {
                     <Col span={6}>
                        {id != 0 ? <span onClick={this.downLoad.bind(this,item.song_id)}>下载</span> : ''}
                        {id != 0 ? <span><LickIcon musicId={item.song_id}/></span> : '' }
-                       <span><MusicPlayIcon music={item} id={this.props.match.params.id}/></span>
+                       <MusicPlayIcon music={item} id={this.props.match.params.id}/>
                     </Col>
                 </Row>
             </Card>

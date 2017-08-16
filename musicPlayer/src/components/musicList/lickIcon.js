@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 import { Icon , message} from 'antd';
-import $ from 'jquery';
 import PubSub from 'pubsub-js';
+import $ from 'jquery';
 
 class LickIcon extends Component {
     constructor() {
@@ -73,6 +73,9 @@ class LickIcon extends Component {
         this.setState({
             isLick: false
         })
+    }
+    componentWillUnmont() {
+        PubSub.unsubscribe('getMusicId');
     }
     render() {
         return(

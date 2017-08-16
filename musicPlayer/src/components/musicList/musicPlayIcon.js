@@ -9,12 +9,30 @@ class MusicPlayIcon extends Component {
         super();
         /**
          * @param {String} searchSong 接口链接 获得音乐信息
+         * @param {Number} musicId 正在播放的音乐id 默认 0
          */
         this.state = {
+            musicId: 0,
             searchSong: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid='
         }
     }
-    
+    // 添加获得 正在播放音乐id 事件
+    componentDidMount(){
+        let that = this;
+        PubSub.subscribe('getMusicId',function(msg,musicId){
+            that.setMusicId(musicId);
+        });
+    }
+    // 设置正在播放的id
+    setMusicId(musicId) {
+        this.setState({
+            musicId
+        })
+    }
+    // 改变播放状态
+    changePlay() {
+        PubSub.publish('changPlay');
+    }
     /**
      * 播放此音乐
      * @param {Object} music 音乐信息
@@ -50,8 +68,11 @@ class MusicPlayIcon extends Component {
     }
 
     render() {
+        let HTML = this.state.musicId == this.props.music.song_id
+        ? <Icon type="pause-circle" onClick={this.changePlay.bind(this) }/> 
+        : <Icon type="play-circle" onClick={this.musicPlay.bind(this, this.props.music)} />;
         return(
-            <Icon type="play-circle" onClick={this.musicPlay.bind(this, this.props.music)} />
+            <span>{HTML}</span>
         )
     }
 }
