@@ -52,3 +52,6 @@
 .musicList .musicGroup .ant-col-6+.ant-col-6{
     text-align: center;
 }
+.musicList .musicGroup .ant-col-6 .anticon-heart{
+    color: red;
+}

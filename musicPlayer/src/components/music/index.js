@@ -4,7 +4,7 @@ import {message} from 'antd';
 import PubSub from 'pubsub-js';
 import $ from 'jquery';
 import 'jplayer';
-import ProgressPage from '../progressPage/';
+import MusicPage from '../musicPage/';
 
 class Music extends Component {
     constructor() {
@@ -15,13 +15,15 @@ class Music extends Component {
          * @param {Array} likeMusics 喜欢的音乐的数组 默认[]
          * @param {Object} music 当前播放音乐的信息 默认 {}
          * @param {string} LickMusicName 存储喜欢音乐数组的 localStorage name 默认 LICKMUSICS
+         * @param {Boolean} isPlay 播放状态 默认 false
          */
         this.state = {
             index: 0,
             list: [],
             likeMusics: [],
             music: {},
-            LickMusicName: 'LICKMUSICS'
+            LickMusicName: 'LICKMUSICS',
+            isPlay: false
         }
         this.addMusic = this.addMusic.bind(this);
         this.deleteMusic = this.deleteMusic.bind(this);
@@ -44,7 +46,10 @@ class Music extends Component {
         // 添加 addLike deleteLike 事件
         PubSub.subscribe('addLike',function(msg,music){
             that.addMusic(music);
-        })
+        });
+        PubSub.subscribe('musicPlay',function(msg,music){
+            that.musicPlay(music);
+        });
         PubSub.subscribe('deleteLike',function(msg,musicId){
             that.deleteMusic(musicId);
         })
@@ -77,7 +82,28 @@ class Music extends Component {
         }).jPlayer('play');
         this.setState({
             index,
+            isPlay: true,
             music: this.state.list[index]
+        });
+    }
+    // 改变播放状态
+    changePlay(){
+        if(this.state.isPlay) {
+            $('#player').jPlayer('pause');
+        } else {
+            $('#player').jPlayer('play');
+        }
+        this.setState({
+            isPlay: !this.state.isPlay
+        });
+    }
+    musicPlay(music){
+        $('#player').jPlayer('setMedia',{
+            mp3: music.file
+        }).jPlayer('play');
+        this.setState({
+            music,
+            isPlay: true,
         });
     }
     /**
@@ -119,14 +145,17 @@ class Music extends Component {
     // 移除 pubsub 监听的事件
     componentWillUnmount() {
         PubSub.unsubscribe('addLike');
-        PubSub.unsubscribe('deleteLike')
+        PubSub.unsubscribe('deleteLike');
+        PubSub.unsubscribe('musicPlay');
     }
     render(){
         return(
             <div>
-                <ProgressPage music={this.state.music}
+                <MusicPage music={this.state.music}
                 musicIndex={this.state.index}
                 changeMusicIndex={this.changeMusicIndex.bind(this)}
+                changePlay={this.changePlay.bind(this)}
+                isPlay={this.state.isPlay}
                 />
             </div>
         )

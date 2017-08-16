@@ -1,8 +1,10 @@
 import React , { Component } from 'react';
-import { Row, Col , Card , Pagination, message} from 'antd';
+import { Row, Col , Card , Pagination, message } from 'antd';
+import PubSub from 'pubsub-js';
 import $ from 'jquery';
 import LickIcon from './lickIcon.js';
 import Header from '../header/';
+import MusicPlayIcon from './musicPlayIcon';
 import './index.css';
 // 音乐列表
 
@@ -15,7 +17,8 @@ class MusicList extends Component {
      * @param {Boolean} Jumper 分页是否需要搜索页功能 默认 false
      * @param {String}  img 此列表头图链接 默认''
      * @param {Objeact} billboard 当前列表信息 默认{}
-     * @param {String} search 接口链接
+     * @param {String} search 接口链接 获得不同类型音乐数组列表】
+     * @param {String} searchSong 接口链接 获得音乐信息
      */
     constructor() {
         super();
@@ -133,6 +136,7 @@ class MusicList extends Component {
                     <Col span={6}>
                        {id != 0 ? <span onClick={this.downLoad.bind(this,item.song_id)}>下载</span> : ''}
                        {id != 0 ? <span><LickIcon musicId={item.song_id}/></span> : '' }
+                       <span><MusicPlayIcon music={item} id={this.props.match.params.id}/></span>
                     </Col>
                 </Row>
             </Card>

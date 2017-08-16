@@ -4,20 +4,18 @@ import Progress from './progress/';
 import $ from 'jquery';
 import 'jplayer';
 import './style.css';
-class ProgressPage extends Component {
+class MusicPage extends Component {
     /**
      * @parma {Number} duration 音乐最大时长 默认0
      * @parma {Number} percent 播放进度条百分比（1-100） 默认0
      * @parma {Number} volume 音量控制条百分比（1-100） 默认0
-     * @parma {Boolean} isPlay 播放状态 默认 false
      */
     constructor() {
         super();
         this.state = {
             percent: 0,
             duration: 0,
-            volume: 0,
-            isPlay: false
+            volume: 0
         }
         this.next = this.next.bind(this);
         this.prev = this.prev.bind(this);
@@ -56,30 +54,13 @@ class ProgressPage extends Component {
         $('#player').jPlayer('volume', percent);
     }
 
-    // 改变播放状态
-    changePlay(){
-        if(this.state.isPlay) {
-            $('#player').jPlayer('pause');
-        } else {
-            $('#player').jPlayer('play');
-        }
-        this.setState({
-            isPlay: !this.state.isPlay
-        });
-    }
     // 上一曲 切歌完之后 状态改为播放
     next() {
         this.props.changeMusicIndex(this.props.musicIndex + 1);
-        this.setState({
-            isPlay: true
-        })
     }
     // 下一曲 切歌完之后 状态改为播放
     prev() {
         this.props.changeMusicIndex(this.props.musicIndex - 1);
-        this.setState({
-            isPlay: true
-        })
     }
     // 解绑
     componentWillUnmount() {
@@ -94,8 +75,8 @@ class ProgressPage extends Component {
                     <div id="player"></div>
                     <div className='btn-group'>
                         <Icon type="left-circle" onClick={this.prev}/>
-                        <Icon type={this.state.isPlay ? 'pause-circle' : 'play-circle'}
-                        onClick={this.changePlay.bind(this)}/>
+                        <Icon type={this.props.isPlay ? 'pause-circle' : 'play-circle'}
+                        onClick={() => this.props.changePlay() }/>
                         <Icon type='right-circle' onClick={this.next}/>
                     </div>
                     <div className='musicBox'>
@@ -104,6 +85,7 @@ class ProgressPage extends Component {
                             <p>
                                 <span>{this.props.music.title}</span>
                                 <span>{this.props.music.artist_name}</span>
+                                <span>{this.props.music.album_title || ''}</span>
                             </p>
                             <Progress percent={this.state.percent}
                                 changePercent={this.changePercent.bind(this)}
@@ -129,4 +111,4 @@ class ProgressPage extends Component {
 
 }
 
-export default ProgressPage;
+export default MusicPage;
