@@ -1,13 +1,15 @@
 import React , { Component } from 'react';
 import { Row, Col , Icon} from 'antd';
 import Progress from './progress/';
+import $ from 'jquery';
+import 'jplayer';
 import './style.css';
 class ProgressPage extends Component {
     /**
      * @parma {Number} duration 音乐最大时长 默认0
      * @parma {Number} percent 播放进度条百分比（1-100） 默认0
      * @parma {Number} volume 音量控制条百分比（1-100） 默认0
-     * @parma {Boolean} isPlay 播放状态 默认 false 
+     * @parma {Boolean} isPlay 播放状态 默认 false
      */
     constructor() {
         super();
@@ -29,9 +31,9 @@ class ProgressPage extends Component {
             this.setState({
                 duration: e.jPlayer.status.duration,
                 volume: e.jPlayer.status.volume * 100,
-                percent 
+                percent
             });
-            // 播放完之后自动切歌  
+            // 播放完之后自动切歌
             if(percent >= 99.5) {
                 this.next();
             }
@@ -43,7 +45,7 @@ class ProgressPage extends Component {
      * @param {Float} percent 点击进度条回调的参数 0 - 1
      */
     changePercent(percent){
-        $("#player").jPlayer('play', this.state.duration * percent);
+        $('#player').jPlayer('play', this.state.duration * percent);
     }
 
      /**
@@ -51,15 +53,15 @@ class ProgressPage extends Component {
      * @param {Float} percent 点击进度条回调的参数 0 - 1
      */
     changeVolume(percent){
-        $("#player").jPlayer('volume', percent);
+        $('#player').jPlayer('volume', percent);
     }
 
     // 改变播放状态
     changePlay(){
         if(this.state.isPlay) {
-            $("#player").jPlayer('pause');
+            $('#player').jPlayer('pause');
         } else {
-            $("#player").jPlayer('play');
+            $('#player').jPlayer('play');
         }
         this.setState({
             isPlay: !this.state.isPlay
@@ -92,9 +94,9 @@ class ProgressPage extends Component {
                     <div id="player"></div>
                     <div className='btn-group'>
                         <Icon type="left-circle" onClick={this.prev}/>
-                        <Icon type={this.state.isPlay ? 'pause-circle' : "play-circle"} 
+                        <Icon type={this.state.isPlay ? 'pause-circle' : 'play-circle'}
                         onClick={this.changePlay.bind(this)}/>
-                        <Icon type="right-circle" onClick={this.next}/>
+                        <Icon type='right-circle' onClick={this.next}/>
                     </div>
                     <div className='musicBox'>
                         <img src={this.props.music.pic_small} alt={this.props.music.title}></img>
@@ -102,7 +104,7 @@ class ProgressPage extends Component {
                             <p>
                                 <span>{this.props.music.title}</span>
                                 <span>{this.props.music.artist_name}</span>
-                            </p> 
+                            </p>
                             <Progress percent={this.state.percent}
                                 changePercent={this.changePercent.bind(this)}
                                 color='#C11B0F' barColor='#1E1E1E' height='8px'/>

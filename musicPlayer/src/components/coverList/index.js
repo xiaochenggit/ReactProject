@@ -3,7 +3,7 @@
 import React , { Component } from 'react';
 import Cover from './cover';
 import Header from '../header/';
-import { Row, Col, Card, Icon } from 'antd';
+import { Row, Col, Card } from 'antd';
 import './style.css';
 
 class CoverList extends Component {
@@ -15,7 +15,7 @@ class CoverList extends Component {
         }
     }
     componentWillMount() {
-        // 获得分类列表的 json 文件  
+        // 获得分类列表的 json 文件
         let fetchOptions = {methods: 'GET'};
         fetch('/js/coverList.json',fetchOptions).then(res => res.json())
         .then(list =>{
@@ -44,7 +44,7 @@ class CoverList extends Component {
                                 <div>
                                     {listHTML}
                                 </div>
-                            </Card>              
+                            </Card>
                         </Col>
                         <Col span={2}></Col>
                     </Row>

@@ -1,9 +1,10 @@
 import React , { Component } from 'react';
 import { Row, Col , Card , Pagination, message} from 'antd';
-import PubSub from 'pubsub-js';
+import $ from 'jquery';
+import LickIcon from './lickIcon.js';
 import Header from '../header/';
 import './index.css';
-// 音乐列表 
+// 音乐列表
 
 class MusicList extends Component {
     /**
@@ -26,8 +27,7 @@ class MusicList extends Component {
             img: '',
             song_list: [],
             billboard: {},
-            search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=',
-            searchSong: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid='
+            search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type='
         }
     }
     // 改变页码 改变当前页码和当前页音乐数组
@@ -81,8 +81,7 @@ class MusicList extends Component {
         }
     }
     /**
-     * 
-     * @param {Number} musicId 下载歌曲的 id 
+     * @param {Number} musicId 下载歌曲的 id
      */
     downLoad(musicId) {
         $.ajax({
@@ -97,31 +96,15 @@ class MusicList extends Component {
                message.info('开始下载 ' + data.songinfo.title);
             },
             error: (err) => {
-               message.error('下载失败！');
-            }
-        });
-    }
-    // 喜欢 
-    addLike(musicId){
-        $.ajax({
-            url: this.state.searchSong + musicId,
-            type: 'POST',
-            dataType: 'jsonp',
-            xhrFields : {
-                withCredentials:true
-            },
-            success: (data)=> {
-               PubSub.publish('addLive',data);
-            },
-            error: (err) => {
-               message.error('添加失败');
+               message.error('下载失败！' + err);
             }
         });
     }
     render() {
         let id = this.props.match.params.id;
         let musicGroupHTML = this.state.song_list.length ?
-        this.state.song_list.map((item,index) =>
+        this.state.song_list.map((item,index) =>{
+            return(
             <Card key={index}>
                 <Row>
                     <Col span={6}>
@@ -132,44 +115,45 @@ class MusicList extends Component {
                     <Col span={6}>{item.album_title || '本地'}</Col>
                     <Col span={6}>
                        {id != '0' ? <span onClick={this.downLoad.bind(this,item.song_id)}>下载</span> : ''}
-                       <span onClick={this.addLike.bind(this,item.song_id)}>添加</span>
+                       <span><LickIcon musicId={item.song_id}/></span>
                     </Col>
                 </Row>
             </Card>
-        )
+            )
+        })
         : '暂无数据';
         return(
             <div className='main'>
                 {/*公共头部  */}
                 <Header />
-                <div className='musicList'> 
-                <Row>
-                    <Col span={2}></Col>
-                    <Col span={20}>
-                        {/*列表信息  */}
-                        <div className='musicListTop'>
-                            <img src={this.state.img} alt={this.state.billboard.name}/>
-                            <div className='musicListdes'>
-                                <h2>{this.state.billboard.name}</h2>
-                                <p>{this.state.billboard.comment}</p>
-                                <p>{this.state.billboard.update_date}</p>
+                <div className='musicList'>
+                    <Row>
+                        <Col span={2}></Col>
+                        <Col span={20}>
+                            {/*列表信息  */}
+                            <div className='musicListTop'>
+                                <img src={this.state.img} alt={this.state.billboard.name}/>
+                                <div className='musicListdes'>
+                                    <h2>{this.state.billboard.name}</h2>
+                                    <p>{this.state.billboard.comment}</p>
+                                    <p>{this.state.billboard.update_date}</p>
+                                </div>
                             </div>
-                        </div>
-                        {/*音乐列表  */}
-                        <div className='musicGroup'>
-                            {musicGroupHTML}
-                        </div>
-                        {/*分页  */}
-                        <Pagination style={{display: this.state.song_listArr.length > this.state.pageSize ? 'block' : 'none'}}
-                            defaultPageSize={this.state.pageSize}
-                            onChange={this.onChange.bind(this)}
-                            total={this.state.song_listArr.length}
-                            showQuickJumper={this.state.Jumper}
-                            defaultCurrent={this.state.pageIndex}
-                        />
-                    </Col>
-                    <Col span={2}></Col>
-                </Row>
+                            {/*音乐列表  */}
+                            <div className='musicGroup'>
+                                {musicGroupHTML}
+                            </div>
+                            {/*分页  */}
+                            <Pagination style={{display: this.state.song_listArr.length > this.state.pageSize ? 'block' : 'none'}}
+                                defaultPageSize={this.state.pageSize}
+                                onChange={this.onChange.bind(this)}
+                                total={this.state.song_listArr.length}
+                                showQuickJumper={this.state.Jumper}
+                                defaultCurrent={this.state.pageIndex}
+                            />
+                        </Col>
+                        <Col span={2}></Col>
+                    </Row>
                 </div>
             </div>
         )

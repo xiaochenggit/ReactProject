@@ -63,6 +63,7 @@
   "dependencies": {
     "antd": "^2.12.5",
     "core-js": "^2.0.0",
+    "jplayer": "^2.9.2",
     "jquery": "^3.2.1",
     "normalize.css": "^4.0.0",
     "pubsub-js": "^1.5.7",

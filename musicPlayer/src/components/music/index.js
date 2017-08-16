@@ -1,6 +1,9 @@
 // 音乐播放器控制部分
 import React , { Component } from 'react';
+import {message} from 'antd';
 import PubSub from 'pubsub-js';
+import $ from 'jquery';
+import 'jplayer';
 import ProgressPage from '../progressPage/';
 
 class Music extends Component {
@@ -11,6 +14,7 @@ class Music extends Component {
          * @param {Array} list 音乐数组 默认 []
          * @param {Array} likeMusics 喜欢的音乐的数组 默认[]
          * @param {Object} music 当前播放音乐的信息 默认 {}
+         * @param {string} LickMusicName 存储喜欢音乐数组的 localStorage name 默认 LICKMUSICS
          */
         this.state = {
             index: 0,
@@ -37,22 +41,24 @@ class Music extends Component {
     }
     componentDidMount(){
         let that = this;
-        // 接收 addLive 事件
-        PubSub.subscribe('addLive',function(msg,music){
+        // 添加 addLike deleteLike 事件
+        PubSub.subscribe('addLike',function(msg,music){
             that.addMusic(music);
+        })
+        PubSub.subscribe('deleteLike',function(msg,musicId){
+            that.deleteMusic(musicId);
         })
         // 设置音乐 地址 状态(暂停 || 开始) 音量 格式
         $('#player').jPlayer({
             ready: function() {
                 $(this).jPlayer('setMedia',{
                     mp3: that.state.music.file
-                }).jPlayer('pause');
+                }).jPlayer('    ');
             },
             volume: 0.5,
             supplied: 'mp3, m4a',
             wmode: 'window'
         });
-        this.deleteMusic(33467253);
     }
     // 切歌操作
     changeMusicIndex(index) {
@@ -68,7 +74,7 @@ class Music extends Component {
         // 改变音乐的播放地址
         $('#player').jPlayer('setMedia',{
             mp3: that.state.list[index].file
-        }).jPlayer('play');  
+        }).jPlayer('play');
         this.setState({
             index,
             music: this.state.list[index]
@@ -88,8 +94,13 @@ class Music extends Component {
             pic_small: music.songinfo.pic_small
         }
         likeMusics.push(obj);
+        message.info('成功添加 ' + music.songinfo.title)
         localStorage.setItem(this.state.LickMusicName, JSON.stringify(likeMusics));
     }
+    /**
+     * 删除音乐
+     * @param {Number} musicId 音乐的id
+     */
     deleteMusic(musicId) {
         let likeMusics = JSON.parse(localStorage.getItem(this.state.LickMusicName)) || [];
         if(likeMusics.length === 0) {
@@ -98,16 +109,22 @@ class Music extends Component {
         likeMusics.forEach(function(element, index) {
             if(element.id == musicId) {
                 likeMusics.splice(index, 1);
+                message.info('成功删除 ' + element.title)
                 return false;
             }
         });
         localStorage.setItem(this.state.LickMusicName, JSON.stringify(likeMusics));
     }
+    // 移除 pubsub 监听的事件
+    componentWillUnmount() {
+        PubSub.unsubscribe('addLike');
+        PubSub.unsubscribe('deleteLike')
+    }
     render(){
         return(
             <div>
-                <ProgressPage music={this.state.music} 
-                musicIndex={this.state.index} 
+                <ProgressPage music={this.state.music}
+                musicIndex={this.state.index}
                 changeMusicIndex={this.changeMusicIndex.bind(this)}
                 />
             </div>

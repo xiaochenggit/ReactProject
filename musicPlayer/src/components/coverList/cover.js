@@ -1,9 +1,11 @@
 // 音乐分类小模块
 
 import React , { Component } from 'react';
+import $ from 'jquery';
 import {Link} from 'react-router-dom';
 import { Card } from 'antd';
 import './cover.css';
+
 class Cover extends Component {
     /**
      * @param {String} update_date 更新时间 默认为空
