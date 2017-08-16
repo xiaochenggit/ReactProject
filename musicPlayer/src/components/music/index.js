@@ -87,9 +87,10 @@ class Music extends Component {
     addMusic(music) {
         let likeMusics = JSON.parse(localStorage.getItem(this.state.LickMusicName)) || [];
         var obj = {
-            id: music.songinfo.song_id,
+            song_id: music.songinfo.song_id,
             title: music.songinfo.title,
             artist_name: music.songinfo.author,
+            album_title: music.songinfo.album_title,
             file: music.bitrate.file_link,
             pic_small: music.songinfo.pic_small
         }
@@ -107,7 +108,7 @@ class Music extends Component {
             return false;
         }
         likeMusics.forEach(function(element, index) {
-            if(element.id == musicId) {
+            if(element.song_id == musicId) {
                 likeMusics.splice(index, 1);
                 message.info('成功删除 ' + element.title)
                 return false;

@@ -27,7 +27,9 @@ class MusicList extends Component {
             img: '',
             song_list: [],
             billboard: {},
-            search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type='
+            LickMusicName: 'LICKMUSICS',
+            search: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=',
+            searchSong: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid='
         }
     }
     // 改变页码 改变当前页码和当前页音乐数组
@@ -42,7 +44,7 @@ class MusicList extends Component {
         let id = this.props.match.params.id;
         let pageIndex = this.state.pageIndex;
         // 判断是不是本地音乐 不是本地音乐接口获得数据
-        if (id != '0') {
+        if (id > 0) {
             $.ajax({
                 url: this.state.search + id,
                 type: 'POST',
@@ -61,7 +63,7 @@ class MusicList extends Component {
                     });
                 }
             });
-        } else {
+        } else if(id == 0) {
             // 获得本地音乐列表文件
             let fetchOptions = {methods: 'GET'};
             fetch('/js/musicList.json',fetchOptions).then(res => res.json())
@@ -77,6 +79,21 @@ class MusicList extends Component {
                     },
                     img: require('../../images/' + 8 + '.jpg')
                 });
+            });
+        }
+        else if(id == -1) {
+            // 获得存在 localStorage 里喜欢的音乐
+            let list = JSON.parse(localStorage.getItem(this.state.LickMusicName)) || [];
+            this.setState({
+                Jumper:  document.body.offsetWidth >= 800,
+                song_listArr: list,
+                song_list: list.slice((pageIndex - 1) * this.state.pageSize , this.state.pageSize),
+                billboard: {
+                    name: '喜欢的音乐',
+                    comment: '喜欢的音乐列表！',
+                    update_date: '今天'
+                },
+                img: require('../../images/' + 18 + '.jpg')
             });
         }
     }
@@ -114,8 +131,8 @@ class MusicList extends Component {
                     <Col span={6}>{item.artist_name}</Col>
                     <Col span={6}>{item.album_title || '本地'}</Col>
                     <Col span={6}>
-                       {id != '0' ? <span onClick={this.downLoad.bind(this,item.song_id)}>下载</span> : ''}
-                       <span><LickIcon musicId={item.song_id}/></span>
+                       {id != 0 ? <span onClick={this.downLoad.bind(this,item.song_id)}>下载</span> : ''}
+                       {id != 0 ? <span><LickIcon musicId={item.song_id}/></span> : '' }
                     </Col>
                 </Row>
             </Card>

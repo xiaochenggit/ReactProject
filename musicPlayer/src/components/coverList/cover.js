@@ -25,8 +25,9 @@ class Cover extends Component {
         }
     }
     componentWillMount() {
+        let id = this.props.id;
         // 判断 id 是否为 0  0是本地音乐模块 不需要搜索获得信息
-        if(this.props.id != '0') {
+        if(id > 0) {
             // 因为跨域了 所以使用 jsonp
             $.ajax({
                 url: this.state.search + this.props.id,
@@ -45,13 +46,21 @@ class Cover extends Component {
                     });
                 }
             });
-        } else {
+        } else if (id == 0) {
             // 本地音乐独自设置
             this.setState({
                 update_date: '今天',
                 name: '本地歌曲',
                 comment: '本地歌曲',
                 img: require('../../images/' + 8 + '.jpg')
+            });
+        } else if (id == -1) {
+            // 喜欢的音乐独自设置
+            this.setState({
+                update_date: '今天',
+                name: '喜欢的音乐',
+                comment: '喜欢的音乐',
+                img: require('../../images/' + 18 + '.jpg')
             });
         }
     }

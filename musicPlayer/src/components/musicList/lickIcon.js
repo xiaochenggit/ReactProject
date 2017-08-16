@@ -34,7 +34,7 @@ class LickIcon extends Component {
             return false;
         }
         likeMusics.forEach(function(element) {
-            if(element.id == musicId) {
+            if(element.song_id == musicId) {
                 isLick = true;
                 return false;
             }
