@@ -118,7 +118,8 @@ class Music extends Component {
         var obj = {
             song_id: music.songinfo.song_id,
             title: music.songinfo.title,
-            artist_name: music.songinfo.author,
+            author: music.songinfo.author,
+            ting_uid: music.songinfo.ting_uid,
             album_title: music.songinfo.album_title,
             file: music.bitrate.file_link,
             pic_small: music.songinfo.pic_small
