@@ -1,6 +1,5 @@
 import React , { Component } from 'react';
 import { Row, Col , Card , Pagination, message } from 'antd';
-import PubSub from 'pubsub-js';
 import $ from 'jquery';
 import LickIcon from './lickIcon.js';
 import Header from '../header/';

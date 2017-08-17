@@ -55,3 +55,18 @@
 .musicList .musicGroup .ant-col-6 .anticon-heart{
     color: red;
 }
+.musicList .musicGroup .ant-col-6 .musicPercent{
+    position: relative;
+}
+.musicList .musicGroup .ant-col-6 .musicPercent .ant-progress-circle{
+    position: absolute;
+    top: -12px;
+    left: 3px;
+}
+.musicList .musicGroup .ant-col-6 .musicPercent .anticon{
+    position: relative;
+    z-index: 10;
+}
+.musicList .musicGroup .ant-col-6 .musicPercent .ant-progress-circle-trail{
+    stroke: red;
+} 

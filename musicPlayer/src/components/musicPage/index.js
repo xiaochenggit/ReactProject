@@ -26,8 +26,12 @@ class MusicPage extends Component {
      */
     componentDidMount() {
         $('#player').bind($.jPlayer.event.timeupdate, (e) => {
-            PubSub.publish('getMusicId',this.props.music.song_id);
             let percent = e.jPlayer.status.currentPercentAbsolute;// 播放百分比
+            PubSub.publish('getMusic',{
+                id: this.props.music.song_id,
+                percent,
+                isPlay: this.props.isPlay
+            });
             this.setState({
                 duration: e.jPlayer.status.duration,
                 volume: e.jPlayer.status.volume * 100,

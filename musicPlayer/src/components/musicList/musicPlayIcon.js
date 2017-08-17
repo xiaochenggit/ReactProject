@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
-import { Icon, message } from 'antd';
+import { Icon, message , Progress} from 'antd';
 // 播放按钮
 class MusicPlayIcon extends Component {
 
@@ -9,24 +9,28 @@ class MusicPlayIcon extends Component {
         super();
         /**
          * @param {String} searchSong 接口链接 获得音乐信息
-         * @param {Number} musicId 正在播放的音乐id 默认 0
+         * @param {Object} music 正在播放的音乐 id percent isPlay  默认 0
          */
         this.state = {
-            musicId: 0,
+            music: {
+                id: 0,
+                percent: 0,
+                isPlay: false
+            },
             searchSong: 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid='
         }
     }
-    // 添加获得 正在播放音乐id 事件
+    // 添加获得 正在播放音乐 id percent isPlay
     componentDidMount(){
         let that = this;
-        PubSub.subscribe('getMusicId',function(msg,musicId){
-            that.setMusicId(musicId);
+        PubSub.subscribe('getMusic',function(msg,music){
+            that.setMusic(music);
         });
     }
-    // 设置正在播放的id
-    setMusicId(musicId) {
+    // 设置正在播放的 music 的信息
+    setMusic(music) {
         this.setState({
-            musicId
+            music
         })
     }
     // 改变播放状态
@@ -66,11 +70,20 @@ class MusicPlayIcon extends Component {
             PubSub.publish('musicPlay', music);
         }
     }
-
+    componentWillUnmount() {
+        PubSub.unsubscribe('getMusic');
+    }
     render() {
-        let HTML = this.state.musicId == this.props.music.song_id
-        ? <Icon type="pause-circle" onClick={this.changePlay.bind(this) }/> 
-        : <Icon type="play-circle" onClick={this.musicPlay.bind(this, this.props.music)} />;
+        // 判断是否是该音乐， 然后显示播放进度和播放状态
+        let StateMusic = this.state.music;
+        let PropMusic = this.props.music;
+        let HTML = StateMusic.id == PropMusic.song_id
+        ? <span className='musicPercent'>
+            {StateMusic.isPlay ? <Icon type="pause-circle" onClick={this.changePlay.bind(this) }/>
+            : <Icon type="play-circle" onClick={this.changePlay.bind(this) }/>}
+            <Progress type="circle" percent={StateMusic.percent} width={20} showInfo={false} strokeWidth={10} />
+          </span>
+        : <span><Icon type="play-circle" onClick={this.musicPlay.bind(this, PropMusic)} /></span>;
         return(
             <span>{HTML}</span>
         )

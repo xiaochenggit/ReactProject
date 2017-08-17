@@ -53,7 +53,7 @@ class Music extends Component {
         PubSub.subscribe('deleteLike',function(msg,musicId){
             that.deleteMusic(musicId);
         })
-        PubSub.subscribe('changPlay',function(msg){
+        PubSub.subscribe('changPlay',function(){
             that.changePlay();
         })
         // 设置音乐 地址 状态(暂停 || 开始) 音量 格式
@@ -106,7 +106,7 @@ class Music extends Component {
         }).jPlayer('play');
         this.setState({
             music,
-            isPlay: true,
+            isPlay: true
         });
     }
     /**
