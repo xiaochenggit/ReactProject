@@ -35,6 +35,7 @@ class Music extends Component {
         };
         fetch('/js/musicList.json',fetchOptions).then(res => res.json())
         .then(list => {
+            var list =  JSON.parse(localStorage.getItem(this.state.LickMusicName)) || list;
             this.setState({
                 list,
                 music: list[this.state.index]
@@ -61,12 +62,13 @@ class Music extends Component {
             ready: function() {
                 $(this).jPlayer('setMedia',{
                     mp3: that.state.music.file
-                }).jPlayer('    ');
+                }).jPlayer(that.state.isPlay ? 'play' : 'pause');
             },
             volume: 0.5,
             supplied: 'mp3, m4a',
             wmode: 'window'
         });
+        this.changePlay();
     }
     // 切歌操作
     changeMusicIndex(index) {

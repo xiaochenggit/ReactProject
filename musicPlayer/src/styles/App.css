@@ -1,12 +1,14 @@
 /* Base Application Styles */
 html {
-  color: #fff;
-  background: #222;
   font-size: 10px;
   font-family: "Times New Roman",Georgia,Serif;
   min-height: 100%;
 }
 body {
   background-color: #F5F5F5;
-  height: auto;
+  min-height: 100%;
+}
+
+#app{
+  padding-bottom: 7rem;
 }

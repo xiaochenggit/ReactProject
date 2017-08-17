@@ -25,7 +25,7 @@ class MusicTypePage extends Component {
     }
     componentDidMount() {
         // 获得此页面分类 id
-        let id = this.props.match.params.id;
+        let id = Number(this.props.match.params.id);
         // 判断是不是本地音乐 不是本地音乐接口获得数据
         if (id > 0) {
             $.ajax({
@@ -36,12 +36,16 @@ class MusicTypePage extends Component {
                     withCredentials:true
                 },
                 success: (data)=> {
-                    let billboard = data.billboard;
-                    this.setState({
-                        song_listArr: data.song_list,
-                        billboard: billboard,
-                        img: require('../../images/' + id + '.jpg')
-                    });
+                    if(data.song_list) {
+                        let billboard = data.billboard;
+                        this.setState({
+                            song_listArr: data.song_list,
+                            billboard: billboard,
+                            img: require('../../images/' + id + '.jpg')
+                        });
+                    } else {
+                        this.props.history.push('/');
+                    }
                 }
             });
         } else if(id == 0) {
@@ -74,6 +78,8 @@ class MusicTypePage extends Component {
                 },
                 img: require('../../images/' + 18 + '.jpg')
             });
+        } else {
+            this.props.history.push('/');
         }
     }
     render() {

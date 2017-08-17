@@ -67,15 +67,15 @@ class LickIcon extends Component {
             }
         });
     }
+    componentWillUnmont() {
+        PubSub.unsubscribe('getMusicId');
+    }
     // 删除喜欢吧 MusicId 发送给 music 管理中心
     deleteLike() {
         PubSub.publish('deleteLike',this.props.musicId);
         this.setState({
             isLick: false
         })
-    }
-    componentWillUnmont() {
-        PubSub.unsubscribe('getMusicId');
     }
     render() {
         return(

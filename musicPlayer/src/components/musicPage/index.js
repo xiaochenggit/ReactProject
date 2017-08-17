@@ -16,7 +16,9 @@ class MusicPage extends Component {
         this.state = {
             percent: 0,
             duration: 0,
-            volume: 0
+            volume: 0,
+            durationTime: 0,
+            currentTime: '00:00'
         }
         this.next = this.next.bind(this);
         this.prev = this.prev.bind(this);
@@ -35,7 +37,9 @@ class MusicPage extends Component {
             this.setState({
                 duration: e.jPlayer.status.duration,
                 volume: e.jPlayer.status.volume * 100,
-                percent
+                percent,
+                durationTime: this.getTime(e.jPlayer.status.duration),
+                currentTime: this.getTime(e.jPlayer.status.currentTime)
             });
             // 播放完之后自动切歌
             if(percent >= 99.5) {
@@ -51,7 +55,15 @@ class MusicPage extends Component {
     changePercent(percent){
         $('#player').jPlayer('play', this.state.duration * percent);
     }
-
+    getTime(Num) {
+        let date = new Date(Num * 1000);
+        let h = ('0' + (date.getHours()-8)).slice(-2);
+        let m = ('0' + date.getMinutes()).slice(-2);
+        let s = ('0' + date.getSeconds()).slice(-2);
+        let time =  Number(h) ? h + ':' : '';
+        time += m + ':' + s;
+        return time;
+    }
      /**
      * 点击进度条 更新播放音量
      * @param {Float} percent 点击进度条回调的参数 0 - 1
@@ -96,6 +108,10 @@ class MusicPage extends Component {
                             <Progress percent={this.state.percent}
                                 changePercent={this.changePercent.bind(this)}
                                 color='#C11B0F' barColor='#1E1E1E' height='8px'/>
+                            <p>
+                                <span>{this.state.currentTime}</span>
+                                <span>{this.state.durationTime}</span>
+                            </p>
                         </div>
                     </div>
                     <div className='musicVolume'>
