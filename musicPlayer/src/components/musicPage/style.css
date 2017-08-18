@@ -46,7 +46,7 @@
 .progressPage .musicBox .musicDes{
     vertical-align: top;
     display: inline-block;
-    width: calc(100% - 6rem);
+    width: calc(100% - 12rem);
     margin-right: 1rem;
 }
 .progressPage .musicBox .musicDes p{
@@ -59,6 +59,14 @@
 }
 .progressPage .musicBox .musicDes p span{
     margin-right: 1rem;
+}
+.progressPage .musicBox .time {
+    width: 6rem;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 2rem;
+    color: #fff;
+    margin-top: 1.5rem;
 }
 .progressPage .anticon-sound{
     font-size: 2rem;

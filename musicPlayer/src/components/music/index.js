@@ -23,7 +23,7 @@ class Music extends Component {
             likeMusics: [],
             music: {},
             LickMusicName: 'LICKMUSICS',
-            isPlay: false
+            isPlay: true
         }
         this.addMusic = this.addMusic.bind(this);
         this.deleteMusic = this.deleteMusic.bind(this);
@@ -68,7 +68,6 @@ class Music extends Component {
             supplied: 'mp3, m4a',
             wmode: 'window'
         });
-        this.changePlay();
     }
     // 切歌操作
     changeMusicIndex(index) {
@@ -127,8 +126,11 @@ class Music extends Component {
             pic_small: music.songinfo.pic_small
         }
         likeMusics.push(obj);
-        message.info('成功添加 ' + music.songinfo.title)
+        this.setState({
+            list:likeMusics
+        });
         localStorage.setItem(this.state.LickMusicName, JSON.stringify(likeMusics));
+        message.info('成功添加 ' + music.songinfo.title);
     }
     /**
      * 删除音乐
@@ -145,6 +147,9 @@ class Music extends Component {
                 message.info('成功删除 ' + element.title)
                 return false;
             }
+        });
+        this.setState({
+            list:likeMusics
         });
         localStorage.setItem(this.state.LickMusicName, JSON.stringify(likeMusics));
     }

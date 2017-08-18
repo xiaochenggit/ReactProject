@@ -17,7 +17,7 @@ class MusicPage extends Component {
             percent: 0,
             duration: 0,
             volume: 0,
-            durationTime: 0,
+            durationTime: '00.00',
             currentTime: '00:00'
         }
         this.next = this.next.bind(this);
@@ -108,11 +108,11 @@ class MusicPage extends Component {
                             <Progress percent={this.state.percent}
                                 changePercent={this.changePercent.bind(this)}
                                 color='#C11B0F' barColor='#1E1E1E' height='8px'/>
-                            <p>
-                                <span>{this.state.currentTime}</span>
-                                <span>{this.state.durationTime}</span>
-                            </p>
                         </div>
+                        <p className='time'>
+                            <span>{this.state.currentTime}/</span>
+                            <span>{this.state.durationTime}</span>
+                        </p>
                     </div>
                     <div className='musicVolume'>
                         <Icon type="sound" />
